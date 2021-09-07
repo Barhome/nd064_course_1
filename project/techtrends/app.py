@@ -81,8 +81,12 @@ def status():
 @app.route('/metrics')
 # Define metrics function to handle metrics endpoint 
 def metrics():
+    # Getting posts count
+    connection = get_db_connection()
+    post_count = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
     response = app.response_class(
-        response= json.dumps({"db_connection_count":1,"post_count":7}),
+        response= json.dumps({"db_connection_count":1,"post_count":len(post_count)}),
         mimetype="application/json"
 
     )
