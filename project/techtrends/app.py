@@ -1,6 +1,7 @@
 import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
+from flask.wrappers import Response
 from werkzeug.exceptions import abort
 
 # Function to get a database connection.
@@ -76,7 +77,17 @@ def status():
     )
     return response 
 
+# Building metrics endpoint for techtrends
+@app.route('/metrics')
+# Define metrics function to handle metrics endpoint 
+def metrics():
+    response = app.response_class(
+        response= json.dumps({"db_connection_count":1,"post_count":7}),
+        mimetype="application/json"
 
+    )
+    return response
+  
 # start the application on port 3111
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port='3111')
