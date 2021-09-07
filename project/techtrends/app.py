@@ -77,9 +77,9 @@ def create():
 # define status function to handle healthz endpoint
 def status():
     response = app.response_class(
-        response = json.dumps({"result":"OK - Healthy"}),
-        status=200,
-        mimetype='application/json'
+        response = json.dumps({'result':'OK - Healthy'}),
+        status = 200,
+        mimetype ='application/json'
     )
     return response 
 
@@ -94,12 +94,12 @@ def metrics():
     # global counter
     global db_connection_counter
     response = app.response_class(
-        response= json.dumps({"db_connection_count":db_connection_counter,"post_count":len(post_count)}),
-        mimetype="application/json"
+        response = json.dumps({'db_connection_count':db_connection_counter,'post_count':len(post_count)}),
+        mimetype = "application/json"
 
     )
     return response
   
 # start the application on port 3111
-if __name__ == "__main__":
+if __name__ == '__main__':
    app.run(host='0.0.0.0', port='3111')
