@@ -4,11 +4,17 @@ from flask import Flask, jsonify, json, render_template, request, url_for, redir
 from flask.wrappers import Response
 from werkzeug.exceptions import abort
 
+# Define db_connection_counter
+db_connection_counter = 0 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    #global counter 
+    global db_connection_counter
+    db_connection_counter +=1
+    print(db_connection_counter)
     return connection
 
 # Function to get a post using its ID
@@ -85,8 +91,10 @@ def metrics():
     connection = get_db_connection()
     post_count = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
+    # global counter
+    global db_connection_counter
     response = app.response_class(
-        response= json.dumps({"db_connection_count":1,"post_count":len(post_count)}),
+        response= json.dumps({"db_connection_count":db_connection_counter,"post_count":len(post_count)}),
         mimetype="application/json"
 
     )
