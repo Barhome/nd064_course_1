@@ -65,6 +65,18 @@ def create():
 
     return render_template('create.html')
 
+# Building healthz endpoint for techtrends
+@app.route('/healthz')
+# define status function to handle healthz endpoint
+def status():
+    response = app.response_class(
+        response = json.dumps({"result":"OK - Healthy"}),
+        status=200,
+        mimetype='application/json'
+    )
+    return response 
+
+
 # start the application on port 3111
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port='3111')
