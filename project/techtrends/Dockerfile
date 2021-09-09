@@ -3,5 +3,6 @@ LABEL maintainer = "Barhome"
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirments.txt
-CMD ["python","init_db.py","app.py"]
+RUN python init_db.py
+CMD ["python","app.py"]
 EXPOSE 3111
